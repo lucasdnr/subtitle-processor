@@ -1,4 +1,5 @@
 import re
+import os
 
 def preprocess_file_content(raw_text):
     """
@@ -107,3 +108,31 @@ def process_subtitles(srt_content_raw):
              
     return final_output_str
 
+def main():
+    """Main function to run the program."""
+    input_filename = input("Please enter the name of the input subtitle file (e.g., video.srt): ")
+
+    # Derive the output filename
+    base_name, _ = os.path.splitext(input_filename)
+    output_filename = f"{base_name}-result.srt"
+
+    try:
+        with open(input_filename, 'r', encoding='utf-8') as f:
+            video_file_content = f.read()
+        
+        if not video_file_content.strip():
+            print(f"The input file '{input_filename}' is empty or contains only whitespace. Nothing to process.")
+        else:
+            modified_subtitles = process_subtitles(video_file_content)
+            
+            with open(output_filename, 'w', encoding='utf-8') as outfile:
+                outfile.write(modified_subtitles)
+            print(f"Processed subtitles saved to '{output_filename}'")
+            
+    except FileNotFoundError:
+        print(f"Error: Input file '{input_filename}' not found. Please check the file name and path.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    main()
