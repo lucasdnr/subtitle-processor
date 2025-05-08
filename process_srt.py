@@ -1,7 +1,7 @@
 import re
 import os
 
-def preprocess_file_content(raw_text):
+def preprocess_file_content(raw_text) -> str:
     """
     Removes potential "" annotations from the beginning of lines.
     These annotations might appear if the content is fetched via certain tools
@@ -14,7 +14,7 @@ def preprocess_file_content(raw_text):
         actual_content_lines.append(cleaned_line)
     return "\n".join(actual_content_lines)
 
-def process_subtitles(srt_content_raw):
+def process_subtitles(srt_content_raw) -> str:
     """
     Processes SRT content to merge subtitle entries into pairs.
     - Each new entry will contain two lines of text from two original consecutive entries.
@@ -108,7 +108,7 @@ def process_subtitles(srt_content_raw):
              
     return final_output_str
 
-def main():
+def main() -> None:
     """Main function to run the program."""
     input_filename = input("Please enter the name of the input subtitle file (e.g., video.srt): ")
 
